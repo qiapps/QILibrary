@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#70000000"
+    android:id="@+id/vg_container_drawer">
+
+    <LinearLayout
+        android:id="@+id/vg_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#FFF"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:translationY="0dp">
+
+        <LinearLayout
+            android:id="@+id/container_ads_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:orientation="horizontal">
+            <include layout="@layout/qiapps_native_ads_default"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txt_sair_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#bdbdbd"
+            android:text="@string/close"
+            android:gravity="center"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="download">INSTALL</string>
+    <string name="anuncio">AD</string>
+    <string name="instadownloader_title">Download videos for Instagram</string>
+    <string name="instadownloader_description">Download Reels, Feed, Post and IGTV</string>
+
+    <string name="statussaver_title">Status Saver for WhatsApp</string>
+    <string name="statussaver_description">Save all statuses in your gallery</string>
+
+    <string name="minihabitos_title">Mini Habits - Routine, Habit and Daily Tasks</string>
+    <string name="minihabitos_description">Manage your daily routines and tasks</string>
+
+    <string name="qinvest_title">QInvest - Simulador de Investimentos</string>
+    <string name="qinvest_description">Quer saber como o mundo dos investimentos funciona?</string>
+
+    <string name="qimetas_title">QIMetas - Metas, Objetivos e Produtividade</string>
+    <string name="qimetas_description">Realize seus objetivos!</string>
+    <string name="close">CLOSE</string>
+
+
+</resources>
