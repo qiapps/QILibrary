@@ -1,12 +1,15 @@
 package com.qiapps.qilibrary;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardItem;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private QIBottomDrawerAds qiBottomDrawerAds;
     private ViewGroup drawerContainer;
     private Button button;
+    private TextView txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         vg_ads = findViewById(R.id.container_ads);
         drawerContainer = findViewById(R.id.bottom_container);
         button = findViewById(R.id.button);
+        txt = findViewById(R.id.txt);
+
         MobileAds.initialize(this);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         //disabled apps to show ads
         //qiNativeAds.addBlockedQIAppsAds(QIUtils.INSTADOWNLOADER);
         //qiNativeAds.addBlockedQIAppsAds(QIUtils.STATUS_SAVER);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"Montserrat_bold.ttf");
+        qiNativeAds.setButtonTypeFace(tf);
+        qiNativeAds.setTitleTypeFace(tf);
         qiNativeAds.setSmallType();
         qiNativeAds.build();
     }

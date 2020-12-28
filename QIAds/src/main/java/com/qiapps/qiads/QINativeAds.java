@@ -2,6 +2,7 @@ package com.qiapps.qiads;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
@@ -32,12 +33,14 @@ public class QINativeAds {
     private int adAtribuitionBackgroundColor = 0;
     private ArrayList<String> disabledQIApps = new ArrayList<>();
     private int typeAds = QIUtils.TYPE_DEFAULT;
+    private Typeface buttonTypeFace;
+    private Typeface titleTypeFace;
+
 
     public QINativeAds(Activity context, ViewGroup container_native_ads, String adUnit) {
         this.container_native_ads = container_native_ads;
         this.context = context;
         this.adUnit = adUnit;
-
         initResources();
     }
 
@@ -125,6 +128,14 @@ public class QINativeAds {
         typeAds = QIUtils.TYPE_SMALL;
     }
 
+    public void setButtonTypeFace(Typeface buttonTypeFace) {
+        this.buttonTypeFace = buttonTypeFace;
+    }
+
+    public void setTitleTypeFace(Typeface titleTypeFace) {
+        this.titleTypeFace = titleTypeFace;
+    }
+
     public boolean show(){
         if(mAdView != null && mUnifiedNativeAd != null) {
             try {
@@ -155,6 +166,12 @@ public class QINativeAds {
                 btn.setText(callToAction);
                 if(buttonResource != null){
                     btn.setBackground(buttonResource);
+                }
+                if(buttonTypeFace != null){
+                    btn.setTypeface(buttonTypeFace);
+                }
+                if(titleTypeFace != null){
+                    title.setTypeface(titleTypeFace);
                 }
                 mAdView.setCallToActionView(btn);
                 //ad atribuition
@@ -217,6 +234,12 @@ public class QINativeAds {
         adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
         if(buttonResource != null){
             btn.setBackground(buttonResource);
+        }
+        if(buttonTypeFace != null){
+            btn.setTypeface(buttonTypeFace);
+        }
+        if(titleTypeFace != null){
+            title.setTypeface(titleTypeFace);
         }
 
         btn.setOnClickListener(new View.OnClickListener() {

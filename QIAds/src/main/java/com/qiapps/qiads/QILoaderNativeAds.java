@@ -59,7 +59,8 @@ public class QILoaderNativeAds {
                             loaderUtils.onLoadFailed();
                         }
                     }
-                }).build();
+                })
+                .build();
 
         adLoader.loadAd(new AdRequest.Builder().build());
     }
