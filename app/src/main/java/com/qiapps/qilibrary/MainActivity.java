@@ -122,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
         qiNativeAds.setButtonTypeFace(tf);
         qiNativeAds.setTitleTypeFace(tf);
         qiNativeAds.setSmallType();
+        qiNativeAds.setShowWhenFinishLoad(false);
         qiNativeAds.build();
+        qiNativeAds.show();
     }
 
     private void exampleVideoReward(){

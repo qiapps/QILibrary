@@ -35,6 +35,7 @@ public class QINativeAds {
     private int typeAds = QIUtils.TYPE_DEFAULT;
     private Typeface buttonTypeFace;
     private Typeface titleTypeFace;
+    private boolean inLoad = false;
 
 
     public QINativeAds(Activity context, ViewGroup container_native_ads, String adUnit) {
@@ -84,9 +85,11 @@ public class QINativeAds {
 
     public void build() {
         buildAdView();
+        inLoad = true;
         QILoaderNativeAds qiLoaderNativeAds = new QILoaderNativeAds(context, adUnit, new QILoaderNativeAds.LoaderUtils() {
             @Override
             public void onLoad(UnifiedNativeAd unifiedNativeAd) {
+                inLoad = false;
                 mUnifiedNativeAd = unifiedNativeAd;
                 if(showWhenFinishLoad){
                     show();
@@ -95,6 +98,7 @@ public class QINativeAds {
 
             @Override
             public void onLoadFailed() {
+                inLoad = false;
                 if(showWhenFinishLoad){
                     showQIAppsAds();
                 }
@@ -137,64 +141,70 @@ public class QINativeAds {
     }
 
     public boolean show(){
-        if(mAdView != null && mUnifiedNativeAd != null) {
-            try {
-                String headLine = mUnifiedNativeAd.getHeadline();
-                String sub = mUnifiedNativeAd.getBody();
-                String callToAction = mUnifiedNativeAd.getCallToAction();
+        if(inLoad){
+            showWhenFinishLoad = true;
+            return false;
+        }else{
+            if(mAdView != null && mUnifiedNativeAd != null) {
+                try {
+                    String headLine = mUnifiedNativeAd.getHeadline();
+                    String sub = mUnifiedNativeAd.getBody();
+                    String callToAction = mUnifiedNativeAd.getCallToAction();
 
-                if(typeAds == QIUtils.TYPE_DEFAULT){
-                    MediaView mdv = mAdView.findViewById(R.id.mediaview);
-                    mAdView.setMediaView(mdv);
+                    if(typeAds == QIUtils.TYPE_DEFAULT){
+                        MediaView mdv = mAdView.findViewById(R.id.mediaview);
+                        mAdView.setMediaView(mdv);
+                    }
+
+                    ImageView img = mAdView.findViewById(R.id.img_ads);
+                    img.setImageDrawable(mUnifiedNativeAd.getIcon().getDrawable());
+                    mAdView.setIconView(img);
+
+                    TextView title = mAdView.findViewById(R.id.title_ads);
+                    title.setText(headLine);
+                    title.setTextColor(titleTextColor);
+                    mAdView.setHeadlineView(title);
+
+                    TextView subtitle = mAdView.findViewById(R.id.subtitle_ads);
+                    subtitle.setText(sub);
+                    subtitle.setTextColor(descriptionTextColor);
+                    mAdView.setBodyView(subtitle);
+
+                    Button btn = mAdView.findViewById(R.id.btn_ads);
+                    btn.setText(callToAction);
+                    if(buttonResource != null){
+                        btn.setBackground(buttonResource);
+                    }
+                    if(buttonTypeFace != null){
+                        btn.setTypeface(buttonTypeFace);
+                    }
+                    if(titleTypeFace != null){
+                        title.setTypeface(titleTypeFace);
+                    }
+                    mAdView.setCallToActionView(btn);
+                    //ad atribuition
+                    TextView adAtr = mAdView.findViewById(R.id.ad_atribuition);
+                    adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
+
+                    mAdView.setNativeAd(mUnifiedNativeAd);
+
+                    container_native_ads.removeAllViews();
+                    container_native_ads.addView(mAdView);
+                    container_native_ads.setVisibility(View.VISIBLE);
+                    if(customNativeAdsUtils != null){
+                        customNativeAdsUtils.onLoad();
+                    }
+                    return true;
+                }catch (Exception e){
+                    showQIAppsAds();
+                    return true;
                 }
-
-                ImageView img = mAdView.findViewById(R.id.img_ads);
-                img.setImageDrawable(mUnifiedNativeAd.getIcon().getDrawable());
-                mAdView.setIconView(img);
-
-                TextView title = mAdView.findViewById(R.id.title_ads);
-                title.setText(headLine);
-                title.setTextColor(titleTextColor);
-                mAdView.setHeadlineView(title);
-
-                TextView subtitle = mAdView.findViewById(R.id.subtitle_ads);
-                subtitle.setText(sub);
-                subtitle.setTextColor(descriptionTextColor);
-                mAdView.setBodyView(subtitle);
-
-                Button btn = mAdView.findViewById(R.id.btn_ads);
-                btn.setText(callToAction);
-                if(buttonResource != null){
-                    btn.setBackground(buttonResource);
-                }
-                if(buttonTypeFace != null){
-                    btn.setTypeface(buttonTypeFace);
-                }
-                if(titleTypeFace != null){
-                    title.setTypeface(titleTypeFace);
-                }
-                mAdView.setCallToActionView(btn);
-                //ad atribuition
-                TextView adAtr = mAdView.findViewById(R.id.ad_atribuition);
-                adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
-
-                mAdView.setNativeAd(mUnifiedNativeAd);
-
-                container_native_ads.removeAllViews();
-                container_native_ads.addView(mAdView);
-                container_native_ads.setVisibility(View.VISIBLE);
-                if(customNativeAdsUtils != null){
-                    customNativeAdsUtils.onLoad();
-                }
-                return true;
-            }catch (Exception e){
+            }else{
                 showQIAppsAds();
                 return true;
             }
-        }else{
-            showQIAppsAds();
-            return true;
         }
+
     }
 
     private void showQIAppsAds(){
