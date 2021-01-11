@@ -86,7 +86,7 @@
         android:text="@string/download"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
         fontPath="Montserrat-Bold.ttf"
         tools:ignore="MissingPrefix"
         android:layout_marginRight="5dp"

@@ -29,6 +29,7 @@ public class QINativeAds {
     public static final String TEST_AD_UNIT = "/6499/example/native";
     private int titleTextColor = 0;
     private int descriptionTextColor = 0;
+    private int callToActionTextColor = 0;
     private Drawable buttonResource;
     private int adAtribuitionBackgroundColor = 0;
     private ArrayList<String> disabledQIApps = new ArrayList<>();
@@ -123,6 +124,10 @@ public class QINativeAds {
         this.titleTextColor = color;
     }
 
+    public void setCallToActionColor(int color){
+        this.callToActionTextColor = color;
+    }
+
     public void setDescriptionColor(int color){
         this.descriptionTextColor = color;
     }
@@ -169,12 +174,17 @@ public class QINativeAds {
 
                     TextView title = mAdView.findViewById(R.id.title_ads);
                     title.setText(headLine);
-                    title.setTextColor(titleTextColor);
-                    mAdView.setHeadlineView(title);
+                    if(titleTextColor != 0){
+                        title.setTextColor(titleTextColor);
+                    }
 
+                    mAdView.setHeadlineView(title);
                     TextView subtitle = mAdView.findViewById(R.id.subtitle_ads);
                     subtitle.setText(sub);
-                    subtitle.setTextColor(descriptionTextColor);
+                    if(descriptionTextColor != 0){
+                        subtitle.setTextColor(descriptionTextColor);
+                    }
+
                     mAdView.setBodyView(subtitle);
 
                     Button btn = mAdView.findViewById(R.id.btn_ads);
@@ -191,7 +201,13 @@ public class QINativeAds {
                     mAdView.setCallToActionView(btn);
                     //ad atribuition
                     TextView adAtr = mAdView.findViewById(R.id.ad_atribuition);
-                    adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
+                    if(adAtribuitionBackgroundColor != 0){
+                        adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
+                    }
+
+                    if(callToActionTextColor != 0){
+                        btn.setTextColor(callToActionTextColor);
+                    }
 
                     mAdView.setNativeAd(mUnifiedNativeAd);
 
@@ -248,9 +264,18 @@ public class QINativeAds {
         btn.setText(R.string.download);
 
         //config resources
-        title.setTextColor(titleTextColor);
-        subtitle.setTextColor(descriptionTextColor);
-        adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
+        if(titleTextColor != 0) {
+            title.setTextColor(titleTextColor);
+        }
+        if(descriptionTextColor != 0) {
+            subtitle.setTextColor(descriptionTextColor);
+        }
+        if(adAtribuitionBackgroundColor != 0) {
+            adAtr.setBackgroundColor(adAtribuitionBackgroundColor);
+        }
+        if(callToActionTextColor != 0){
+            btn.setTextColor(callToActionTextColor);
+        }
         if(buttonResource != null){
             btn.setBackground(buttonResource);
         }

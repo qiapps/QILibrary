@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         qiNativeAds.setType(QIUtils.TYPE_SMALL2);
         Drawable btn = ContextCompat.getDrawable(this,R.drawable.botao_slim);
         qiNativeAds.setButtonResource(btn);
+        int color = ContextCompat.getColor(this,R.color.colorPrimary);
+        qiNativeAds.setCallToActionColor(color);
         qiNativeAds.build();
         qiNativeAds.show();
     }
