@@ -1,10 +1,12 @@
 package com.qiapps.qilibrary;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.qiapps.qiads.QIBottomDrawerAds;
 import com.qiapps.qiads.QINativeAds;
 import com.qiapps.qiads.QIReward;
+import com.qiapps.qiads.QIUtils;
 import com.qiapps.qiads.QInterstitial;
 import com.qiapps.qirating.QIRating;
 
@@ -121,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getAssets(),"Montserrat_bold.ttf");
         qiNativeAds.setButtonTypeFace(tf);
         qiNativeAds.setTitleTypeFace(tf);
-        qiNativeAds.setSmallType();
         qiNativeAds.setShowWhenFinishLoad(false);
+        qiNativeAds.setType(QIUtils.TYPE_SMALL2);
+        Drawable btn = ContextCompat.getDrawable(this,R.drawable.botao_slim);
+        qiNativeAds.setButtonResource(btn);
         qiNativeAds.build();
         qiNativeAds.show();
     }

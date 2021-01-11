@@ -75,6 +75,9 @@ public class QINativeAds {
         if(typeAds == QIUtils.TYPE_SMALL){
             adView = (UnifiedNativeAdView) context.getLayoutInflater()
                     .inflate(R.layout.qi_native_ads_small, null);
+        }else if(typeAds == QIUtils.TYPE_SMALL2){
+            adView = (UnifiedNativeAdView) context.getLayoutInflater()
+                    .inflate(R.layout.qi_native_ads_small2, null);
         }else{
             adView = (UnifiedNativeAdView) context.getLayoutInflater()
                     .inflate(R.layout.qi_native_ads_default, null);
@@ -130,6 +133,10 @@ public class QINativeAds {
 
     public void setSmallType(){
         typeAds = QIUtils.TYPE_SMALL;
+    }
+
+    public void setType(int type){
+        typeAds = type;
     }
 
     public void setButtonTypeFace(Typeface buttonTypeFace) {
@@ -219,6 +226,8 @@ public class QINativeAds {
         View view;
         if(typeAds == QIUtils.TYPE_SMALL){
             view = context.getLayoutInflater().inflate(R.layout.qiapps_native_ads_small,null);
+        }else if(typeAds == QIUtils.TYPE_SMALL2){
+            view = context.getLayoutInflater().inflate(R.layout.qiapps_native_ads_small2,null);
         }else{
             view = context.getLayoutInflater().inflate(R.layout.qiapps_native_ads_default,null);
         }
