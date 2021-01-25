@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewGroup drawerContainer;
     private Button button;
     private TextView txt;
+    private CustomApplication customApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +46,25 @@ public class MainActivity extends AppCompatActivity {
         txt = findViewById(R.id.txt);
 
         MobileAds.initialize(this);
+        customApplication = (CustomApplication) getApplication();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int color = getResources().getColor(R.color.colorAccent);
+                /*int color = getResources().getColor(R.color.colorAccent);
                 boolean show = QIRating.show(MainActivity.this,QIRating.COLOR_DEFAULT,"com.qiapps.minihabitos");
                 if(!show){
                     QIRating.addPositiveEvent(MainActivity.this);
-                }
+                }*/
+
+                startActivity(new Intent(MainActivity.this,SecondActivity.class));
+                customApplication.showInterstitial(new CustomApplication.AppListener() {
+                    @Override
+                    public void onAdCloded() {
+                        
+                    }
+                });
+
             }
         });
 

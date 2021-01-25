@@ -136,6 +136,7 @@ public class QINativeAds {
         disabledQIApps.add(blockedAppAds);
     }
 
+
     public void setSmallType(){
         typeAds = QIUtils.TYPE_SMALL;
     }
@@ -217,6 +218,7 @@ public class QINativeAds {
                     if(customNativeAdsUtils != null){
                         customNativeAdsUtils.onLoad();
                     }
+
                     return true;
                 }catch (Exception e){
                     showQIAppsAds();
@@ -313,7 +315,7 @@ public class QINativeAds {
 
 
     public interface CustomNativeAdsUtils{
-        abstract void onLoad();
+        void onLoad();
     }
 
 }

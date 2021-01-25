@@ -26,8 +26,18 @@ public class QInterstitial {
         max_count_load = MAX_COUNT_LOAD_DEFAULT;
     }
 
+    public QInterstitial(Context context, String adUnit) {
+        this.adUnit = adUnit;
+        this.context = context;
+        max_count_load = MAX_COUNT_LOAD_DEFAULT;
+    }
+
     public void setMaxCountLoad(int i){
         max_count_load = i;
+    }
+
+    public void setAdsUtils(AdsUtils adsUtils) {
+        this.adsUtils = adsUtils;
     }
 
     public void build(){
@@ -72,6 +82,10 @@ public class QInterstitial {
             }
         }
         return false;
+    }
+
+    public boolean isLoaded(){
+        return interstitialAd.isLoaded();
     }
 
     public interface AdsUtils{
