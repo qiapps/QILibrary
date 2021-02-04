@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.qiapps.qiads.QIBottomDrawerAds;
+import com.qiapps.qiads.QILoaderNativeAds;
 import com.qiapps.qiads.QINativeAds;
 import com.qiapps.qiads.QIReward;
 import com.qiapps.qiads.QIUtils;
@@ -58,19 +60,20 @@ public class MainActivity extends AppCompatActivity {
                 }*/
 
                 startActivity(new Intent(MainActivity.this,SecondActivity.class));
-                customApplication.showInterstitial(new CustomApplication.AppListener() {
-                    @Override
-                    public void onAdCloded() {
-                        
-                    }
-                });
+//                customApplication.showInterstitial(new CustomApplication.AppListener() {
+//                    @Override
+//                    public void onAdCloded() {
+//
+//                    }
+//                });
 
             }
         });
 
         //exampleInterstitial();
-        exampleNativeDefault();
+        //exampleNativeDefault();
         exampleBottomDrawer();
+        //buildWithNativeAdLoader();
     }
 
     private void exampleBottomDrawer(){
@@ -99,6 +102,34 @@ public class MainActivity extends AppCompatActivity {
         qiBottomDrawerAds.build();
         QINativeAds qin = qiBottomDrawerAds.getAds();
         qin.setAdAtribuitionBackgroundColor(Color.BLUE);
+    }
+
+    private void buildWithNativeAdLoader(){
+        qiNativeAds = new QINativeAds(this,vg_ads);
+        qiNativeAds.setType(QIUtils.TYPE_SMALL2);
+        qiNativeAds.buildAdView();
+        customApplication.setContainerAd(qiNativeAds);
+        /*if(customApplication.failedLoadContent){
+            qiNativeAds.showQIAppsAds();
+        }else{
+            if(customApplication.content != null){
+                qiNativeAds.setUnifiedNativeAd(customApplication.content);
+                qiNativeAds.show();
+            }else{
+                customApplication.contentListener = new CustomApplication.LoadListener() {
+                    @Override
+                    public void onAdLoad() {
+                        qiNativeAds.setUnifiedNativeAd(customApplication.content);
+                        qiNativeAds.show();
+                    }
+
+                    @Override
+                    public void onLoadFailed() {
+                        qiNativeAds.showQIAppsAds();
+                    }
+                };
+            }
+        }*/
     }
 
     private void exampleInterstitial(){

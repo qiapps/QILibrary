@@ -1,6 +1,7 @@
 package com.qiapps.qiads;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -38,6 +39,10 @@ public class QINativeAds {
     private Typeface titleTypeFace;
     private boolean inLoad = false;
 
+    public QINativeAds(Activity context, ViewGroup container_native_ads){
+        this.context = context;
+        this.container_native_ads = container_native_ads;
+    }
 
     public QINativeAds(Activity context, ViewGroup container_native_ads, String adUnit) {
         this.container_native_ads = container_native_ads;
@@ -71,7 +76,7 @@ public class QINativeAds {
         this.showWhenFinishLoad = showWhenFinishLoad;
     }
 
-    private void buildAdView(){
+    public void buildAdView(){
         UnifiedNativeAdView adView;
         if(typeAds == QIUtils.TYPE_SMALL){
             adView = (UnifiedNativeAdView) context.getLayoutInflater()
@@ -153,6 +158,10 @@ public class QINativeAds {
         this.titleTypeFace = titleTypeFace;
     }
 
+    public void setUnifiedNativeAd(UnifiedNativeAd unifiedNativeAd){
+        this.mUnifiedNativeAd = unifiedNativeAd;
+    }
+
     public boolean show(){
         if(inLoad){
             showWhenFinishLoad = true;
@@ -232,7 +241,7 @@ public class QINativeAds {
 
     }
 
-    private void showQIAppsAds(){
+    public void showQIAppsAds(){
 
         QIResourceAds resourceAds = new QIResourceAds(context,disabledQIApps);
         int icon = resourceAds.icon;
