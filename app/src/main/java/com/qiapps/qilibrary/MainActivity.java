@@ -47,33 +47,22 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         txt = findViewById(R.id.txt);
 
-        MobileAds.initialize(this);
+
         customApplication = (CustomApplication) getApplication();
+
+
+
+        //exampleInterstitial();
+        //exampleNativeDefault();
+        //exampleBottomDrawer();
+        //buildWithNativeAdLoader();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*int color = getResources().getColor(R.color.colorAccent);
-                boolean show = QIRating.show(MainActivity.this,QIRating.COLOR_DEFAULT,"com.qiapps.minihabitos");
-                if(!show){
-                    QIRating.addPositiveEvent(MainActivity.this);
-                }*/
-
-                startActivity(new Intent(MainActivity.this,SecondActivity.class));
-//                customApplication.showInterstitial(new CustomApplication.AppListener() {
-//                    @Override
-//                    public void onAdCloded() {
-//
-//                    }
-//                });
-
+                customApplication.showAppOpenAds();
             }
         });
-
-        //exampleInterstitial();
-        //exampleNativeDefault();
-        exampleBottomDrawer();
-        //buildWithNativeAdLoader();
     }
 
     private void exampleBottomDrawer(){
@@ -102,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         qiBottomDrawerAds.build();
         QINativeAds qin = qiBottomDrawerAds.getAds();
         qin.setAdAtribuitionBackgroundColor(Color.BLUE);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qiBottomDrawerAds.show();
+            }
+        });
     }
 
     private void buildWithNativeAdLoader(){
@@ -215,6 +211,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        qiBottomDrawerAds.show();
+        //qiBottomDrawerAds.show();
     }
 }

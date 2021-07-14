@@ -1,10 +1,13 @@
 package com.qiapps.qilibrary;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.qiapps.qiads.QIAppOpenAds;
 import com.qiapps.qiads.QILoaderNativeAds;
 import com.qiapps.qiads.QINativeAds;
 import com.qiapps.qiads.QInterstitial;
@@ -16,17 +19,24 @@ public class CustomApplication extends Application {
     private UnifiedNativeAd content;
     private boolean failedLoadContent = false;
     private QINativeAds qiNativeAds;
+    private QIAppOpenAds qiAppOpenAds;
     //
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        MobileAds.initialize(this);
         qInterstitial = new QInterstitial(this, QInterstitial.TEST_AD_UNIT);
         qInterstitial.build();
 
         buildLoader();
 
+        qiAppOpenAds = new QIAppOpenAds(this,QIAppOpenAds.TEST_AD_UNIT,true);
+    }
+
+    public void showAppOpenAds(){
+        qiAppOpenAds.show();
     }
 
     public void buildLoader(){
