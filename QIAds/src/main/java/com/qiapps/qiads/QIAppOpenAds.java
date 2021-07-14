@@ -35,6 +35,8 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
     private long loadTime = 0;
     private boolean autoShow;
     private boolean autoReloadAds = true;
+    private int countStartEvent = 0;
+    private int MIN_COUNT_EVENT_START_FOR_SHOW = 4;
 
     /** Constructor */
     public QIAppOpenAds(Application myApplication,String adUnit,boolean autoShow) {
@@ -48,8 +50,9 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
     /** LifecycleObserver methods */
     @OnLifecycleEvent(ON_START)
     public void onStart() {
+        countStartEvent++;
         fetchAd();
-        if(autoShow){
+        if(autoShow && countStartEvent >= MIN_COUNT_EVENT_START_FOR_SHOW){
             show();
         }
     }
@@ -88,8 +91,11 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
                             // Set the reference to null so isAdAvailable() returns false.
                             QIAppOpenAds.this.appOpenAd = null;
                             isShowingAd = false;
+                            countStartEvent = 0;
                             if(autoReloadAds){
                                 fetchAd();
+                            }else{
+                                isShowingAd = true;
                             }
 
                         }
@@ -108,6 +114,9 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
 
     }
 
+    public void setMinStartCount(int count){
+        MIN_COUNT_EVENT_START_FOR_SHOW = count;
+    }
 
     public boolean isAutoReloadAds() {
         return autoReloadAds;
