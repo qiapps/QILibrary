@@ -39,6 +39,14 @@ public class CustomApplication extends Application {
         qiAppOpenAds.show();
     }
 
+    public void cleanAppOpenAds(){
+        qiAppOpenAds.setAutoShow(false);
+    }
+
+    public void reactivateAppOpenAds(){
+        qiAppOpenAds.setAutoShow(true);
+    }
+
     public void buildLoader(){
         new QILoaderNativeAds(this, QINativeAds.TEST_AD_UNIT, new QILoaderNativeAds.LoaderUtils() {
             @Override

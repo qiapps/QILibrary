@@ -18,6 +18,8 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.appopen.AppOpenAd;
 
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static androidx.lifecycle.Lifecycle.Event.ON_START;
 
@@ -32,6 +34,7 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
     private static boolean isShowingAd = false;
     private long loadTime = 0;
     private boolean autoShow;
+    private boolean autoReloadAds = true;
 
     /** Constructor */
     public QIAppOpenAds(Application myApplication,String adUnit,boolean autoShow) {
@@ -49,7 +52,6 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
         if(autoShow){
             show();
         }
-        Log.d(LOG_TAG, "onStart");
     }
 
     public void fetchAd() {
@@ -63,7 +65,6 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
             public void onAppOpenAdLoaded(AppOpenAd ad) {
                 QIAppOpenAds.this.appOpenAd = ad;
                 QIAppOpenAds.this.loadTime = (new Date()).getTime();
-                Log.d(LOG_TAG, "Loaded");
 
             }
             @Override
@@ -87,7 +88,10 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
                             // Set the reference to null so isAdAvailable() returns false.
                             QIAppOpenAds.this.appOpenAd = null;
                             isShowingAd = false;
-                            fetchAd();
+                            if(autoReloadAds){
+                                fetchAd();
+                            }
+
                         }
 
                         @Override
@@ -102,6 +106,23 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
             appOpenAd.show(currentActivity, fullScreenContentCallback);
         }
 
+    }
+
+
+    public boolean isAutoReloadAds() {
+        return autoReloadAds;
+    }
+
+    public void setAutoReloadAds(boolean autoReloadAds) {
+        this.autoReloadAds = autoReloadAds;
+    }
+
+    public boolean isAutoShow() {
+        return autoShow;
+    }
+
+    public void setAutoShow(boolean autoShow) {
+        this.autoShow = autoShow;
     }
 
     /** Creates and returns ad request. */

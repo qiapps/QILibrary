@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 customApplication.showAppOpenAds();
             }
         });
+
     }
 
     private void exampleBottomDrawer(){
@@ -212,5 +214,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //qiBottomDrawerAds.show();
+        super.onBackPressed();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        Log.d("AppOpen","onStop");
+        customApplication.cleanAppOpenAds();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        customApplication.reactivateAppOpenAds();
     }
 }
