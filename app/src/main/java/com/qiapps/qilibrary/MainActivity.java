@@ -48,22 +48,20 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         txt = findViewById(R.id.txt);
 
-
         customApplication = (CustomApplication) getApplication();
 
-
-
         //exampleInterstitial();
-        //exampleNativeDefault();
+        exampleNativeDefault();
+        //exampleVideoReward();
         //exampleBottomDrawer();
         //buildWithNativeAdLoader();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customApplication.showAppOpenAds();
-            }
-        });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                customApplication.showAppOpenAds();
+//            }
+//        });
 
     }
 
@@ -106,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         qiNativeAds = new QINativeAds(this,vg_ads);
         qiNativeAds.setType(QIUtils.TYPE_SMALL2);
         qiNativeAds.buildAdView();
-        customApplication.setContainerAd(qiNativeAds);
         /*if(customApplication.failedLoadContent){
             qiNativeAds.showQIAppsAds();
         }else{
@@ -131,10 +128,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exampleInterstitial(){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(qInterstitial!= null){
+                    qInterstitial.show();
+                }
+            }
+        });
         qInterstitial = new QInterstitial(this, QInterstitial.TEST_AD_UNIT, new QInterstitial.AdsUtils() {
             @Override
             public void onLoad() {
-                qInterstitial.show();
+                //qInterstitial.show();
             }
 
             @Override
@@ -166,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         qiNativeAds.setButtonTypeFace(tf);
         qiNativeAds.setTitleTypeFace(tf);
         qiNativeAds.setShowWhenFinishLoad(false);
-        qiNativeAds.setType(QIUtils.TYPE_SMALL2);
+        qiNativeAds.setType(QIUtils.TYPE_DEFAULT);
         Drawable btn = ContextCompat.getDrawable(this,R.drawable.botao_slim);
         qiNativeAds.setButtonResource(btn);
         int color = ContextCompat.getColor(this,R.color.colorPrimary);
@@ -179,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             qiReward = new QIReward(this, QIReward.TEST_AD_UNIT, true, new QIReward.RewardUtils() {
                 @Override
                 public void onLoad() {
-
+                    qiReward.show();
                 }
 
                 @Override
@@ -194,11 +199,6 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onVideoOpen() {
-
-                }
-
-                @Override
-                public void onVideoCloded() {
 
                 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.gms.ads.formats.UnifiedNativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -18,8 +18,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/icon_instadownloader"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/ad_atribuition"
@@ -83,4 +82,4 @@
         android:layout_marginRight="5dp"
         android:paddingHorizontal="2dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.gms.ads.formats.UnifiedNativeAdView>
+</com.google.android.gms.ads.nativead.NativeAdView>

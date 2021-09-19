@@ -25,12 +25,10 @@ public class SecondActivity extends AppCompatActivity {
         qiNativeAds = new QINativeAds(this,vg_ads);
         qiNativeAds.setType(QIUtils.TYPE_SMALL2);
         qiNativeAds.buildAdView();
-        customApplication.setContainerAd(qiNativeAds);
     }
 
     @Override
     protected void onDestroy() {
-        customApplication.buildLoader();
         super.onDestroy();
     }
 }

@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 public class QIReward {
 
     private Activity context;
     private String adUnit;
-    private RewardedAd rewardedAd;
+    private RewardedAd mRewardedAd;
     private static final int MAX_COUNT = 3;
     private int countLoad = 0;
     private boolean inLoad = false;
@@ -25,14 +25,13 @@ public class QIReward {
         this.context = context;
         this.adUnit = adUnit;
         this.rewardUtils = rewardUtils;
-        rewardedAd = new RewardedAd(context,adUnit);
         if(preload){
             build();
         }
     }
 
     private void reset(){
-        rewardedAd = new RewardedAd(context,adUnit);
+        mRewardedAd = null;
         inLoad = false;
         showWhenLoad = false;
         countLoad = 0;
@@ -49,11 +48,11 @@ public class QIReward {
     public void build(){
         inLoad = true;
         countLoad++;
-        rewardedAd.loadAd(new AdRequest.Builder().build(),new RewardedAdLoadCallback(){
+        RewardedAd.load(context, adUnit, new AdRequest.Builder().build(), new RewardedAdLoadCallback() {
             @Override
-            public void onRewardedAdLoaded() {
-                super.onRewardedAdLoaded();
-                //load ad
+            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                super.onAdLoaded(rewardedAd);
+                mRewardedAd = rewardedAd;
                 if(rewardUtils != null){
                     rewardUtils.onLoad();
                     inLoad = false;
@@ -64,8 +63,8 @@ public class QIReward {
             }
 
             @Override
-            public void onRewardedAdFailedToLoad(LoadAdError loadAdError) {
-                super.onRewardedAdFailedToLoad(loadAdError);
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
                 if(countLoad < MAX_COUNT){
                     build();
                 }else{
@@ -80,47 +79,60 @@ public class QIReward {
     }
 
     public void show(){
-        if(rewardedAd.isLoaded()){
-            rewardedAd.show(context, new RewardedAdCallback() {
+        if(mRewardedAd != null){
+
+            mRewardedAd.show(context, new OnUserEarnedRewardListener() {
                 @Override
                 public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    //completou o vídeo
                     if(rewardUtils != null){
                         rewardUtils.onRewarded(rewardItem);
-                        reset();
                     }
                 }
-
-                @Override
-                public void onRewardedAdOpened() {
-                    super.onRewardedAdOpened();
-                    //abriu o vídeo
-                    if(rewardUtils != null){
-                        rewardUtils.onVideoOpen();
-                    }
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    super.onRewardedAdClosed();
-                    //fechou o vídeo
-                    if(rewardUtils != null){
-                        rewardUtils.onVideoCloded();
-                        reset();
-                    }
-                }
-
-                @Override
-                public void onRewardedAdFailedToShow(AdError adError) {
-                    super.onRewardedAdFailedToShow(adError);
-                    //vídeo falhou ao mostrar
-                    if(rewardUtils != null){
-                        rewardUtils.onVideoFailedToShow();
-                        reset();
-                    }
-                }
-
             });
+            if(rewardUtils != null){
+                rewardUtils.onVideoOpen();
+                reset();
+            }
+//            rewardedAd.show(context, new RewardedAdCallback() {
+//                @Override
+//                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+//                    //completou o vídeo
+//                    if(rewardUtils != null){
+//                        rewardUtils.onRewarded(rewardItem);
+//                        reset();
+//                    }
+//                }
+//
+//                @Override
+//                public void onRewardedAdOpened() {
+//                    super.onRewardedAdOpened();
+//                    //abriu o vídeo
+//                    if(rewardUtils != null){
+//                        rewardUtils.onVideoOpen();
+//                    }
+//                }
+//
+//                @Override
+//                public void onRewardedAdClosed() {
+//                    super.onRewardedAdClosed();
+//                    //fechou o vídeo
+//                    if(rewardUtils != null){
+//                        rewardUtils.onVideoCloded();
+//                        reset();
+//                    }
+//                }
+//
+//                @Override
+//                public void onRewardedAdFailedToShow(AdError adError) {
+//                    super.onRewardedAdFailedToShow(adError);
+//                    //vídeo falhou ao mostrar
+//                    if(rewardUtils != null){
+//                        rewardUtils.onVideoFailedToShow();
+//                        reset();
+//                    }
+//                }
+//
+//            });
         }else if(inLoad){
             showWhenLoad = true;
         }else{
@@ -134,7 +146,6 @@ public class QIReward {
         void onLoadFailed();
         void onRewarded(RewardItem rewardItem);
         void onVideoOpen();
-        void onVideoCloded();
         void onVideoFailedToShow();
     }
 

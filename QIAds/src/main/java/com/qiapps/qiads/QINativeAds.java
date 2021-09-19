@@ -13,15 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import com.google.android.gms.ads.formats.MediaView;
+
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+import com.google.android.gms.ads.nativead.MediaView;
+import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.ads.nativead.NativeAdView;
+
 import java.util.ArrayList;
 
 public class QINativeAds {
 
-    private UnifiedNativeAd mUnifiedNativeAd;
-    private UnifiedNativeAdView mAdView;
+    private NativeAd mNativeAd;
+    private NativeAdView mAdView;
     private ViewGroup container_native_ads;
     private Activity context;
     private String adUnit;
@@ -77,15 +80,15 @@ public class QINativeAds {
     }
 
     public void buildAdView(){
-        UnifiedNativeAdView adView;
+        NativeAdView adView;
         if(typeAds == QIUtils.TYPE_SMALL){
-            adView = (UnifiedNativeAdView) context.getLayoutInflater()
+            adView = (NativeAdView) context.getLayoutInflater()
                     .inflate(R.layout.qi_native_ads_small, null);
         }else if(typeAds == QIUtils.TYPE_SMALL2){
-            adView = (UnifiedNativeAdView) context.getLayoutInflater()
+            adView = (NativeAdView) context.getLayoutInflater()
                     .inflate(R.layout.qi_native_ads_small2, null);
         }else{
-            adView = (UnifiedNativeAdView) context.getLayoutInflater()
+            adView = (NativeAdView) context.getLayoutInflater()
                     .inflate(R.layout.qi_native_ads_default, null);
         }
 
@@ -97,9 +100,9 @@ public class QINativeAds {
         inLoad = true;
         QILoaderNativeAds qiLoaderNativeAds = new QILoaderNativeAds(context, adUnit, new QILoaderNativeAds.LoaderUtils() {
             @Override
-            public void onLoad(UnifiedNativeAd unifiedNativeAd) {
+            public void onLoad(NativeAd nativeAd) {
                 inLoad = false;
-                mUnifiedNativeAd = unifiedNativeAd;
+                mNativeAd = nativeAd;
                 if(showWhenFinishLoad){
                     show();
                 }
@@ -158,8 +161,8 @@ public class QINativeAds {
         this.titleTypeFace = titleTypeFace;
     }
 
-    public void setUnifiedNativeAd(UnifiedNativeAd unifiedNativeAd){
-        this.mUnifiedNativeAd = unifiedNativeAd;
+    public void setNativeAd(NativeAd nativeAd){
+        this.mNativeAd = nativeAd;
     }
 
     public boolean show(){
@@ -167,20 +170,31 @@ public class QINativeAds {
             showWhenFinishLoad = true;
             return false;
         }else{
-            if(mAdView != null && mUnifiedNativeAd != null) {
+            if(mAdView != null && mNativeAd != null) {
                 try {
-                    String headLine = mUnifiedNativeAd.getHeadline();
-                    String sub = mUnifiedNativeAd.getBody();
-                    String callToAction = mUnifiedNativeAd.getCallToAction();
+                    String headLine = mNativeAd.getHeadline();
+                    String sub = mNativeAd.getBody();
+                    String callToAction = mNativeAd.getCallToAction();
 
                     if(typeAds == QIUtils.TYPE_DEFAULT){
                         MediaView mdv = mAdView.findViewById(R.id.mediaview);
                         mAdView.setMediaView(mdv);
+
+                        ImageView img = mAdView.findViewById(R.id.img_ads);
+                        if(mNativeAd.getIcon() != null){
+                            img.setImageDrawable(mNativeAd.getIcon().getDrawable());
+                            mAdView.setIconView(img);
+                        }
+                    }else{
+                        ImageView img = mAdView.findViewById(R.id.img_ads);
+//                        mAdView.setMediaView(img);
+                        if(mNativeAd.getIcon() != null){
+                            img.setImageDrawable(mNativeAd.getIcon().getDrawable());
+                            mAdView.setIconView(img);
+                        }
                     }
 
-                    ImageView img = mAdView.findViewById(R.id.img_ads);
-                    img.setImageDrawable(mUnifiedNativeAd.getIcon().getDrawable());
-                    mAdView.setIconView(img);
+
 
                     TextView title = mAdView.findViewById(R.id.title_ads);
                     title.setText(headLine);
@@ -219,7 +233,7 @@ public class QINativeAds {
                         btn.setTextColor(callToActionTextColor);
                     }
 
-                    mAdView.setNativeAd(mUnifiedNativeAd);
+                    mAdView.setNativeAd(mNativeAd);
 
                     container_native_ads.removeAllViews();
                     container_native_ads.addView(mAdView);

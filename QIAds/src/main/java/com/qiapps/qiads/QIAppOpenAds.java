@@ -63,16 +63,28 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
             return;
         }
 
+//        loadCallback = new AppOpenAd.AppOpenAdLoadCallback() {
+//            @Override
+//            public void onAppOpenAdLoaded(AppOpenAd ad) {
+//                QIAppOpenAds.this.appOpenAd = ad;
+//                QIAppOpenAds.this.loadTime = (new Date()).getTime();
+//
+//            }
+//            @Override
+//            public void onAppOpenAdFailedToLoad(LoadAdError loadAdError) {
+//                // Handle the error.
+//            }
+//        };
         loadCallback = new AppOpenAd.AppOpenAdLoadCallback() {
             @Override
-            public void onAppOpenAdLoaded(AppOpenAd ad) {
-                QIAppOpenAds.this.appOpenAd = ad;
+            public void onAdLoaded(@NonNull AppOpenAd appOpenAd) {
+                QIAppOpenAds.this.appOpenAd = appOpenAd;
                 QIAppOpenAds.this.loadTime = (new Date()).getTime();
-
             }
+
             @Override
-            public void onAppOpenAdFailedToLoad(LoadAdError loadAdError) {
-                // Handle the error.
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
             }
         };
         AdRequest request = getAdRequest();
@@ -109,7 +121,8 @@ public class QIAppOpenAds implements LifecycleObserver, Application.ActivityLife
                         }
                     };
 
-            appOpenAd.show(currentActivity, fullScreenContentCallback);
+            appOpenAd.setFullScreenContentCallback(fullScreenContentCallback);
+            appOpenAd.show(currentActivity);
         }
 
     }
