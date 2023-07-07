@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.rewarded.RewardItem;
+import com.qiapps.qiads.QIAppOpenSplash;
 import com.qiapps.qiads.QIBottomDrawerAds;
 import com.qiapps.qiads.QILoaderNativeAds;
 import com.qiapps.qiads.QINativeAds;
@@ -62,6 +63,27 @@ public class MainActivity extends AppCompatActivity {
 //                customApplication.showAppOpenAds();
 //            }
 //        });
+
+
+        QIAppOpenSplash.addPositiveEvent(this);
+        customApplication.qiAppOpenSplash.setEventUtils(new QIAppOpenSplash.Utils() {
+            @Override
+            public void event(String event) {
+                if(event.equals(QIAppOpenSplash.ON_LOAD)){
+                    Log.d("AppOpenSplash","ON_LOAD");
+                }
+                if(event.equals(QIAppOpenSplash.FAIL_OR_DISMISS)){
+                    Log.d("AppOpenSplash","FAIL OR DISMISS");
+                }
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customApplication.qiAppOpenSplash.show();
+            }
+        });
 
     }
 
@@ -220,14 +242,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.d("AppOpen","onStop");
-        customApplication.cleanAppOpenAds();
+
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        customApplication.reactivateAppOpenAds();
+
     }
 }
