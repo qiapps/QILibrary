@@ -22,13 +22,13 @@ public class SecondActivity extends AppCompatActivity {
         vg_ads = findViewById(R.id.vg_ads);
         customApplication = (CustomApplication)getApplication();
 
-        qiNativeAds = new QINativeAds(this,vg_ads);
-        qiNativeAds.setType(QIUtils.TYPE_SMALL2);
-        qiNativeAds.buildAdView();
+        customApplication.qiNativeAds.setContainer(vg_ads);
+        customApplication.qiNativeAds.show();
     }
 
     @Override
     protected void onDestroy() {
+        customApplication.createNativeAds(this);
         super.onDestroy();
     }
 }

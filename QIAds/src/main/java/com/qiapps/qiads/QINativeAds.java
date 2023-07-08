@@ -54,6 +54,14 @@ public class QINativeAds {
         initResources();
     }
 
+    public QINativeAds(Activity context, String adUnit){//pre-load
+        this.context = context;
+        this.adUnit = adUnit;
+        initResources();
+        showWhenFinishLoad = false;
+
+    }
+
     public QINativeAds(Activity context, ViewGroup container_native_ads, String adUnit,CustomNativeAdsUtils customNativeAdsUtils) {
         this.container_native_ads = container_native_ads;
         this.context = context;
@@ -163,6 +171,10 @@ public class QINativeAds {
 
     public void setNativeAd(NativeAd nativeAd){
         this.mNativeAd = nativeAd;
+    }
+
+    public void setContainer(ViewGroup viewGroup){
+        this.container_native_ads = viewGroup;
     }
 
     public boolean show(){

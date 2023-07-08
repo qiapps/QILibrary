@@ -51,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         customApplication = (CustomApplication) getApplication();
 
+        customApplication.createNativeAds(this);
+
         //exampleInterstitial();
-        exampleNativeDefault();
+        //exampleNativeDefault();
         //exampleVideoReward();
         //exampleBottomDrawer();
         //buildWithNativeAdLoader();
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customApplication.qiAppOpenSplash.show();
+                startActivity(new Intent(MainActivity.this,SecondActivity.class));
             }
         });
 

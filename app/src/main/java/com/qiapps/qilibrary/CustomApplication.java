@@ -1,5 +1,6 @@
 package com.qiapps.qilibrary;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.google.android.gms.ads.MobileAds;
@@ -15,7 +16,7 @@ public class CustomApplication extends Application {
     private QInterstitial qInterstitial;
 
     private boolean failedLoadContent = false;
-    private QINativeAds qiNativeAds;
+    public QINativeAds qiNativeAds;
     public QIAppOpenSplash qiAppOpenSplash;
     //
 
@@ -28,7 +29,16 @@ public class CustomApplication extends Application {
         //qInterstitial.build();
 
         qiAppOpenSplash = new QIAppOpenSplash(this,QIAppOpenAds.TEST_AD_UNIT,2);
+
+
+
     }
+
+    public void createNativeAds(Activity activity){
+        qiNativeAds = new QINativeAds(activity,QINativeAds.TEST_AD_UNIT);
+        qiNativeAds.build();
+    }
+
 
 
 
