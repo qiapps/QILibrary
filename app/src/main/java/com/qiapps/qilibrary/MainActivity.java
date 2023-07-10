@@ -24,6 +24,7 @@ import com.qiapps.qiads.QILoaderNativeAds;
 import com.qiapps.qiads.QINativeAds;
 import com.qiapps.qiads.QIReward;
 import com.qiapps.qiads.QIUtils;
+import com.qiapps.qiads.QIntersticialReward;
 import com.qiapps.qiads.QInterstitial;
 import com.qiapps.qirating.QIRating;
 
@@ -53,39 +54,43 @@ public class MainActivity extends AppCompatActivity {
 
         customApplication.createNativeAds(this);
 
+
         //exampleInterstitial();
         //exampleNativeDefault();
         //exampleVideoReward();
         //exampleBottomDrawer();
         //buildWithNativeAdLoader();
 
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                customApplication.showAppOpenAds();
-//            }
-//        });
-
-
-        QIAppOpenSplash.addPositiveEvent(this);
-        customApplication.qiAppOpenSplash.setEventUtils(new QIAppOpenSplash.Utils() {
-            @Override
-            public void event(String event) {
-                if(event.equals(QIAppOpenSplash.ON_LOAD)){
-                    Log.d("AppOpenSplash","ON_LOAD");
-                }
-                if(event.equals(QIAppOpenSplash.FAIL_OR_DISMISS)){
-                    Log.d("AppOpenSplash","FAIL OR DISMISS");
-                }
-            }
-        });
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,SecondActivity.class));
+            public void onClick(View v) {
+                QIAppOpenSplash.addPositiveEvent(getApplicationContext());
+                customApplication.qiAppOpenSplash.show();
             }
         });
+
+//        final QIntersticialReward qr = new QIntersticialReward(this,QIntersticialReward.AD_UNIT);
+//        qr.build();
+//
+//        qr.setUtils(new QIntersticialReward.Utils() {
+//            @Override
+//            public void onUserEarnedReward(RewardItem rewardItem) {
+//                Log.d("QIReward","onUserEarnedReward");
+//            }
+//
+//            @Override
+//            public void onAdLoad() {
+//                Log.d("QIReward","onLoad");
+//                qr.showDialogReward(MainActivity.this,"10 Pontos",getColor(R.color.yellow),ContextCompat.getDrawable(MainActivity.this,R.drawable.icon_instadownloader));
+//            }
+//        });
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                qr.show();
+//            }
+//        });
 
     }
 

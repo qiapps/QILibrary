@@ -49,7 +49,7 @@ public class QIAppOpenSplash implements LifecycleObserver, Application.ActivityL
     }
 
     public static void addPositiveEvent(Context context){
-        EventManager.addPositiveEvent(context);
+        EventManager.addPositiveEvent(context,"ContadorEventos");
     }
 
     public void setEventUtils(Utils utils){
@@ -90,7 +90,7 @@ public class QIAppOpenSplash implements LifecycleObserver, Application.ActivityL
 
 
     public void show(){
-        if(isAdAvailable() && EventManager.isEventCountEnable(currentActivity,interval)){
+        if(isAdAvailable() && EventManager.isEventCountEnable(currentActivity,"ContadorEventos",interval)){
             FullScreenContentCallback fullScreenContentCallback =
                     new FullScreenContentCallback() {
                         @Override
@@ -116,7 +116,10 @@ public class QIAppOpenSplash implements LifecycleObserver, Application.ActivityL
             appOpenAd.setFullScreenContentCallback(fullScreenContentCallback);
             appOpenAd.show(currentActivity);
         }else{
-            QIAppOpenSplash.this.utils.event(FAIL_OR_DISMISS);
+            if(utils != null){
+                QIAppOpenSplash.this.utils.event(FAIL_OR_DISMISS);
+            }
+
         }
 
     }

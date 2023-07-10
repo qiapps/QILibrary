@@ -32,6 +32,7 @@ public class CustomApplication extends Application {
 
 
 
+
     }
 
     public void createNativeAds(Activity activity){

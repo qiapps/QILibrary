@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/colorAccent"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assista ao vídeo e ganhe!"
+            android:padding="10dp"
+            android:textSize="26sp"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/img_reward"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/moeda"
+            />
+        <TextView
+            android:id="@+id/reward_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:text="10Hbs"
+            android:textColor="#333"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/rating"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:lottie_fileName="loading.json"
+                app:lottie_loop="true"
+                android:layout_marginLeft="5dp"
+                app:lottie_autoPlay="true"
+                android:visibility="visible"
+                />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Video começa em 5"
+                android:textColor="#333"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end">
+            <TextView
+                android:id="@+id/btn_nao_quero"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Não, obrigado"
+                android:textColor="#333"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

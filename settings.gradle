@@ -2,3 +2,4 @@ include ':QIRating'
 include ':QIAds'
 include ':app'
 rootProject.name = "QILibrary"
+include ':QIGameFicationManager'
